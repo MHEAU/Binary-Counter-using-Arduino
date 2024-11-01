@@ -1,0 +1,29 @@
+const int redLEDs[] = {5, 4, 3}, greenLEDs[] = {6, 7, 8}; 
+const int buttonPin = 2;  
+int count = 0;  
+
+void setup() {
+  for (int i = 0; i < 3; i++) {
+    pinMode(redLEDs[i], OUTPUT);
+    pinMode(greenLEDs[i], OUTPUT);
+  }
+  pinMode(buttonPin, INPUT_PULLUP);  
+}
+
+void loop() {
+  if (digitalRead(buttonPin) == LOW) {
+    delay(50);
+    if (digitalRead(buttonPin) == LOW) {
+      displayCount(++count %= 8); 
+      while (digitalRead(buttonPin) == LOW);
+    }
+  }
+}
+
+void displayCount(int cnt) {
+  for (int i = 0; i < 3; i++) {
+    int state = bitRead(cnt, i); 
+    digitalWrite(redLEDs[i], state); 
+    digitalWrite(greenLEDs[i], state);
+  }
+}
