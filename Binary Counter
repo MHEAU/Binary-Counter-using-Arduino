@@ -1,0 +1,33 @@
+const int LED_1 = 5;      
+const int LED_2 = 4;      
+const int LED_3 = 3;      
+const int buttonPin = 2;  
+
+int count = 0;  
+
+void setup() {
+  pinMode(LED_1, OUTPUT);
+  pinMode(LED_2, OUTPUT);
+  pinMode(LED_3, OUTPUT);
+  pinMode(buttonPin, INPUT_PULLUP);  
+}
+
+void loop() {
+  if (digitalRead(buttonPin) == LOW) { 
+    delay(50);  
+    if (digitalRead(buttonPin) == LOW) { 
+      count++;  
+      if (count > 7) { 
+        count = 0;
+      }
+      displayCount(); 
+      while (digitalRead(buttonPin) == LOW) {} 
+    }
+  }
+}
+
+void displayCount() {
+  digitalWrite(LED_1, bitRead(count, 0)); 
+  digitalWrite(LED_2, bitRead(count, 1)); 
+  digitalWrite(LED_3, bitRead(count, 2)); 
+}
